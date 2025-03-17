@@ -40,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import ru.vk.edu.composeadvenced.screens.animation.AnimatableComponent
@@ -92,7 +93,13 @@ private fun SimpleAnimatableExample() {
     ) {
         Box(
             modifier = Modifier
-                .offset(x = offsetX.value.dp)
+                .offset {
+                    IntOffset(
+                        x = offsetX.value.dp.roundToPx(),
+                        y = 0
+                    )
+                }
+//                .offset(x = offsetX.value.dp)
                 .size(50.dp)
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.primary)
@@ -195,7 +202,13 @@ private fun AdvancedAnimatableExample() {
     ) {
         Box(
             modifier = Modifier
-                .offset(y = offsetY.value.dp)
+                .offset {
+                    IntOffset(
+                        x = 0,
+                        y = offsetY.value.dp.roundToPx(),
+                    )
+                }
+//                .offset(y = offsetY.value.dp)
                 .scale(scale.value)
                 .size(60.dp)
                 .clip(CircleShape)
