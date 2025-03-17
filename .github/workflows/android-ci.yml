@@ -39,17 +39,35 @@ jobs:
         sed -i "s/versionCode = .*/versionCode = ${{ steps.buildnumber.outputs.build_number }}/g" app/build.gradle.kts
         sed -i "s/versionName = .*/versionName = \"1.0.${{ steps.buildnumber.outputs.build_number }}\"/g" app/build.gradle.kts
     
-    - name: Build with Gradle
+    # Для Pull Requests собираем debug-версию
+    - name: Build debug APK for Pull Requests
+      if: github.event_name == 'pull_request'
+      run: ./gradlew assembleDebug
+    
+    # Для master/main собираем release-версию
+    - name: Build release APK for master/main
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
       run: ./gradlew assembleRelease
     
-    - name: Upload APK
+    # Загружаем debug APK для Pull Requests
+    - name: Upload Debug APK
+      if: github.event_name == 'pull_request'
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-debug-${{ steps.buildnumber.outputs.build_number }}
+        path: app/build/outputs/apk/debug/app-debug.apk
+    
+    # Загружаем release APK для master/main
+    - name: Upload Release APK
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
       uses: actions/upload-artifact@v4
       with:
         name: app-release-${{ steps.buildnumber.outputs.build_number }}
         path: app/build/outputs/apk/release/app-release.apk
     
+    # Создаем релиз только для master/main
     - name: Create Release
-      if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
       uses: ncipollo/release-action@v1
       with:
         artifacts: "app/build/outputs/apk/release/app-release.apk"
