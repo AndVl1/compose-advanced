@@ -13,9 +13,10 @@ class AnimationsComponent(
     private val onNavigateToCrossfade: () -> Unit,
     private val onNavigateToAnimateContentSize: () -> Unit,
     private val onNavigateToAnchoredDraggable: () -> Unit,
-    private val onNavigateToAnimateItemPlacement: () -> Unit
+    private val onNavigateToAnimateItemPlacement: () -> Unit,
+    private val onNavigateToCardStack: () -> Unit
 ) : ComponentContext by componentContext {
-    
+
     fun onBackClick() {
         onBack()
     }
@@ -55,4 +56,8 @@ class AnimationsComponent(
     fun onAnimateItemPlacementClick() {
         onNavigateToAnimateItemPlacement()
     }
-} 
+    
+    fun onCertificatesStackClick() {
+        onNavigateToCardStack()
+    }
+}

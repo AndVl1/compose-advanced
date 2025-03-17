@@ -6,7 +6,6 @@ import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.stack.animation.plus
 import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback.predictiveBackAnimation
-import com.arkivanov.decompose.extensions.compose.stack.animation.scale
 import com.arkivanov.decompose.extensions.compose.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import ru.vk.edu.composeadvenced.root.RootComponent
@@ -24,6 +23,7 @@ import ru.vk.edu.composeadvenced.ui.custom.CustomDrawScreen
 import ru.vk.edu.composeadvenced.ui.custom.CustomLayoutScreen
 import ru.vk.edu.composeadvenced.ui.custom.CustomModifierScreen
 import ru.vk.edu.composeadvenced.ui.viewmodel.ViewModelScreen
+import ru.vk.edu.composeadvenced.ui.animation.CertificatesStackScreen
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
@@ -49,6 +49,7 @@ fun RootContent(component: RootComponent) {
             is RootComponent.Child.AnimateContentSize -> AnimateContentSizeScreen(instance.component)
             is RootComponent.Child.AnchoredDraggable -> AnchoredDraggableScreen(instance.component)
             is RootComponent.Child.AnimateItemPlacement -> AnimateItemPlacementScreen(instance.component)
+            is RootComponent.Child.CardStack -> CertificatesStackScreen(instance.component)
             // Кастомные компоненты
             is RootComponent.Child.CustomComponents -> CustomComponentsScreen(instance.component)
             is RootComponent.Child.CustomModifier -> CustomModifierScreen(instance.component)
@@ -59,3 +60,4 @@ fun RootContent(component: RootComponent) {
         }
     }
 }
+
