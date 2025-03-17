@@ -243,7 +243,7 @@ private fun SwipeableListItemExample() {
                     modifier = Modifier.padding(16.dp),
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
-                
+
                 Icon(
                     imageVector = Icons.Default.Edit,
                     contentDescription = "Редактировать",
@@ -251,7 +251,7 @@ private fun SwipeableListItemExample() {
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
-            
+
             // Правые действия
             Row(
                 modifier = Modifier
@@ -270,7 +270,7 @@ private fun SwipeableListItemExample() {
                 )
             }
         }
-        
+
         // Передний элемент списка
         Card(
             modifier = Modifier
@@ -299,12 +299,12 @@ private fun SwipeableListItemExample() {
                 )
             }
         }
-        
+
         Spacer(modifier = Modifier.height(16.dp))
     }
-    
+
     Spacer(modifier = Modifier.height(16.dp))
-    
+
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
@@ -326,7 +326,7 @@ private fun SwipeableListItemExample() {
 private fun AdvancedAnchoredDraggableExample() {
     val density = LocalDensity.current
     val scope = rememberCoroutineScope()
-    
+
     // Создаем состояние для горизонтального перетаскивания
     val horizontalDragState = remember {
         AnchoredDraggableState(
@@ -350,7 +350,7 @@ private fun AdvancedAnchoredDraggableExample() {
             )
         }
     }
-    
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -380,7 +380,7 @@ private fun AdvancedAnchoredDraggableExample() {
                     )
                 }
             }
-            
+
             // Перетаскиваемый элемент
             Box(
                 modifier = Modifier
