@@ -49,13 +49,24 @@ jobs:
       if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
       run: ./gradlew assembleRelease
     
+    # Переименовываем APK файлы, добавляя номер версии
+    - name: Rename APK files
+      run: |
+        if [ "${{ github.event_name }}" == "pull_request" ]; then
+          mkdir -p renamed_apk
+          cp app/build/outputs/apk/debug/app-debug.apk renamed_apk/app-debug-1.0.${{ steps.buildnumber.outputs.build_number }}.apk
+        elif [ "${{ github.ref }}" == "refs/heads/master" ] || [ "${{ github.ref }}" == "refs/heads/main" ]; then
+          mkdir -p renamed_apk
+          cp app/build/outputs/apk/release/app-release.apk renamed_apk/app-release-1.0.${{ steps.buildnumber.outputs.build_number }}.apk
+        fi
+    
     # Загружаем debug APK для Pull Requests
     - name: Upload Debug APK
       if: github.event_name == 'pull_request'
       uses: actions/upload-artifact@v4
       with:
         name: app-debug-${{ steps.buildnumber.outputs.build_number }}
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: renamed_apk/app-debug-1.0.${{ steps.buildnumber.outputs.build_number }}.apk
     
     # Загружаем release APK для master/main
     - name: Upload Release APK
@@ -63,14 +74,14 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: app-release-${{ steps.buildnumber.outputs.build_number }}
-        path: app/build/outputs/apk/release/app-release.apk
+        path: renamed_apk/app-release-1.0.${{ steps.buildnumber.outputs.build_number }}.apk
     
-    # Создаем релиз только для master/main
+    # Создаем релиз только для master/main с переименованным APK
     - name: Create Release
       if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "app/build/outputs/apk/release/app-release.apk"
+        artifacts: "renamed_apk/app-release-1.0.${{ steps.buildnumber.outputs.build_number }}.apk"
         token: ${{ secrets.GITHUB_TOKEN }}
         tag: v1.0.${{ steps.buildnumber.outputs.build_number }}
         name: Release v1.0.${{ steps.buildnumber.outputs.build_number }}
@@ -78,6 +89,7 @@ jobs:
           Автоматическая релизная сборка из ветки master
           
           Номер сборки: ${{ steps.buildnumber.outputs.build_number }}
+          Версия: 1.0.${{ steps.buildnumber.outputs.build_number }}
           Коммит: ${{ github.sha }}
           
           Примечание: Эта сборка использует релизную конфигурацию с дебажной подписью.
