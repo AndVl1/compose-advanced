@@ -30,6 +30,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
@@ -82,7 +83,6 @@ fun AnimateItemPlacementScreen(component: AnimateItemPlacementComponent) {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun AnimatedSortableListExample() {
     var items by remember { mutableStateOf(List(5) { "Элемент ${it + 1}" }) }
@@ -116,8 +116,8 @@ private fun AnimatedSortableListExample() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 4.dp)
-                            .animateItemPlacement(
-                                animationSpec = spring(
+                            .animateItem(
+                                fadeInSpec = null, fadeOutSpec = null, placementSpec = spring(
                                     dampingRatio = Spring.DampingRatioMediumBouncy,
                                     stiffness = Spring.StiffnessLow
                                 )
@@ -136,12 +136,11 @@ private fun AnimatedSortableListExample() {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun AnimatedListWithAddRemoveExample() {
     var items by remember { mutableStateOf(List(3) { "Элемент ${it + 1}" }) }
     var nextItem by remember { mutableIntStateOf(4) }
-    
+
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
@@ -157,7 +156,7 @@ private fun AnimatedListWithAddRemoveExample() {
             ) {
                 Text("Добавить")
             }
-            
+
             Button(
                 onClick = { 
                     if (items.isNotEmpty()) {
@@ -169,7 +168,7 @@ private fun AnimatedListWithAddRemoveExample() {
                 Text("Удалить последний")
             }
         }
-        
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -179,6 +178,8 @@ private fun AnimatedListWithAddRemoveExample() {
                 contentPadding = PaddingValues(vertical = 8.dp)
             ) {
                 items(items, key = { it }) { item ->
+                    Modifier
+                        .fillMaxWidth()
                     ListItem(
                         headlineContent = { Text(item) },
                         trailingContent = {
@@ -186,13 +187,11 @@ private fun AnimatedListWithAddRemoveExample() {
                                 Icon(Icons.Default.Delete, contentDescription = "Удалить")
                             }
                         },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .animateItemPlacement(
-                                animationSpec = tween(durationMillis = 300)
-                            )
+                        modifier = Modifier.animateItem(
+                            fadeInSpec = null, fadeOutSpec = null, placementSpec = tween(durationMillis = 300)
+                        )
                     )
-                    Divider()
+                    HorizontalDivider()
                 }
             }
         }
@@ -208,10 +207,10 @@ private fun AnimatedHorizontalListExample() {
             Color.Cyan, Color.Yellow, Color.DarkGray
         )
     }
-    
+
     var items by remember { mutableStateOf(colors.take(5)) }
     var selectedIndex by remember { mutableIntStateOf(-1) }
-    
+
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
@@ -222,7 +221,7 @@ private fun AnimatedHorizontalListExample() {
             Button(onClick = { items = items.shuffled() }) {
                 Text("Перемешать")
             }
-            
+
             Button(
                 onClick = { 
                     if (items.size < colors.size) {
@@ -237,7 +236,7 @@ private fun AnimatedHorizontalListExample() {
             ) {
                 Text("Добавить")
             }
-            
+
             Button(
                 onClick = { 
                     if (items.size > 1) {
@@ -249,7 +248,7 @@ private fun AnimatedHorizontalListExample() {
                 Text("Удалить")
             }
         }
-        
+
         LazyRow(
             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -260,14 +259,14 @@ private fun AnimatedHorizontalListExample() {
                     targetValue = if (isSelected) 1.2f else 1.0f,
                     label = "scale"
                 )
-                
+
                 Box(
                     modifier = Modifier
                         .size(60.dp * scale)
                         .clip(if (isSelected) CircleShape else RoundedCornerShape(8.dp))
                         .background(color)
-                        .animateItemPlacement(
-                            animationSpec = spring(
+                        .animateItem(
+                            fadeInSpec = null, fadeOutSpec = null, placementSpec = spring(
                                 dampingRatio = Spring.DampingRatioMediumBouncy,
                                 stiffness = Spring.StiffnessLow
                             )
@@ -286,9 +285,9 @@ private fun AnimatedHorizontalListExample() {
                 }
             }
         }
-        
+
         Spacer(modifier = Modifier.height(16.dp))
-        
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
