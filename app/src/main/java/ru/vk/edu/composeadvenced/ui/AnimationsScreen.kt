@@ -21,12 +21,13 @@ fun AnimationsScreen(component: AnimationsComponent) {
         AnimationItem("Animatable", component::onAnimatableClick),
         AnimationItem("animate*asState", component::onAnimateAsStateClick),
         AnimationItem("updateTransition", component::onUpdateTransitionClick),
+        AnimationItem("CertificatesStack", component::onCertificatesStackClick),
         AnimationItem("AnimatedVisibility", component::onAnimatedVisibilityClick),
         AnimationItem("AnimatedContent", component::onAnimatedContentClick),
         AnimationItem("Crossfade", component::onCrossfadeClick),
         AnimationItem("Modifier.animateContentSize", component::onAnimateContentSizeClick),
         AnimationItem("AnchoredDraggable", component::onAnchoredDraggableClick),
-        AnimationItem("animateItemPlacement", component::onAnimateItemPlacementClick)
+        AnimationItem("animateItemPlacement", component::onAnimateItemPlacementClick),
     )
 
     Scaffold(

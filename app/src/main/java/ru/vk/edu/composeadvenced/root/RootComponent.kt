@@ -11,7 +11,6 @@ import ru.vk.edu.composeadvenced.screens.MainComponent
 import ru.vk.edu.composeadvenced.screens.animation.*
 import ru.vk.edu.composeadvenced.screens.custom.*
 import ru.vk.edu.composeadvenced.screens.viewmodel.ViewModelComponent
-import kotlinx.serialization.Serializable
 
 class RootComponent(
     componentContext: ComponentContext
@@ -57,7 +56,8 @@ class RootComponent(
                 onNavigateToCrossfade = { navigation.pushNew(Configuration.CrossfadeScreen) },
                 onNavigateToAnimateContentSize = { navigation.pushNew(Configuration.AnimateContentSizeScreen) },
                 onNavigateToAnchoredDraggable = { navigation.pushNew(Configuration.AnchoredDraggableScreen) },
-                onNavigateToAnimateItemPlacement = { navigation.pushNew(Configuration.AnimateItemPlacementScreen) }
+                onNavigateToAnimateItemPlacement = { navigation.pushNew(Configuration.AnimateItemPlacementScreen) },
+                onNavigateToCardStack = { navigation.pushNew(Configuration.CardStackScreen) }
             )
         )
         is Configuration.AnimatableScreen -> Child.Animatable(
@@ -110,6 +110,12 @@ class RootComponent(
         )
         is Configuration.AnimateItemPlacementScreen -> Child.AnimateItemPlacement(
             AnimateItemPlacementComponent(
+                componentContext = componentContext,
+                onBack = { navigation.pop() }
+            )
+        )
+        is Configuration.CardStackScreen -> Child.CardStack(
+            CertificatesStackComponent(
                 componentContext = componentContext,
                 onBack = { navigation.pop() }
             )
@@ -168,6 +174,7 @@ class RootComponent(
         data class AnimateContentSize(val component: AnimateContentSizeComponent) : Child()
         data class AnchoredDraggable(val component: AnchoredDraggableComponent) : Child()
         data class AnimateItemPlacement(val component: AnimateItemPlacementComponent) : Child()
+        data class CardStack(val component: CertificatesStackComponent) : Child()
         data class CustomComponents(val component: CustomComponentsComponent) : Child()
         data class CustomModifier(val component: CustomModifierComponent) : Child()
         data class CustomDraw(val component: CustomDrawComponent) : Child()

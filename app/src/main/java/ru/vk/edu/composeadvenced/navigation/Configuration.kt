@@ -39,6 +39,9 @@ sealed interface Configuration : Parcelable {
     
     @Parcelize
     data object AnimateItemPlacementScreen : Configuration
+
+    @Parcelize
+    data object CardStackScreen : Configuration
     
     // Экраны для кастомных компонентов
     @Parcelize
