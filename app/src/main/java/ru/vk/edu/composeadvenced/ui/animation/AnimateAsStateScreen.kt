@@ -1,15 +1,22 @@
 package ru.vk.edu.composeadvenced.ui.animation
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.ExperimentalAnimationSpecApi
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.core.keyframesWithSpline
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -31,7 +38,6 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -43,21 +49,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
+import androidx.compose.ui.unit.sp
 import ru.vk.edu.composeadvenced.screens.animation.AnimateAsStateComponent
 import ru.vk.edu.composeadvenced.ui.components.AppToolbar
 import ru.vk.edu.composeadvenced.ui.components.SectionTitle
-import androidx.compose.animation.core.animate
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
-import androidx.compose.animation.core.keyframes
-import androidx.compose.animation.core.keyframesWithSpline
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.ExperimentalAnimationSpecApi
-import androidx.compose.animation.core.FastOutLinearInEasing
 
 @Composable
 fun AnimateAsStateScreen(component: AnimateAsStateComponent) {
@@ -248,7 +247,12 @@ private fun CombinedAnimationExample() {
         ) {
             Box(
                 modifier = Modifier
-                    .offset(y = offset)
+                    .offset {
+                        IntOffset(
+                            x = 0,
+                            y = offset.roundToPx()
+                        )
+                    }
                     .size(size)
                     .clip(CircleShape)
                     .background(color)
@@ -556,18 +560,20 @@ private fun KeyframeMarker(
     label: String,
     verticalOffset: Dp = 0.dp
 ) {
-    Box(
+    BoxWithConstraints(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .offset(
-                    x = ((LocalConfiguration.current.screenWidthDp.dp - 100.dp) * position) -
-                        (LocalConfiguration.current.screenWidthDp.dp - 100.dp) / 2,
-                    y = verticalOffset
-                )
+                .offset {
+                    IntOffset(
+                        x = (((maxWidth - 100.dp) * position) - (maxWidth - 100.dp) / 2)
+                            .roundToPx(),
+                        y = verticalOffset.roundToPx()
+                    )
+                }
         ) {
             // Маркер
             Box(
