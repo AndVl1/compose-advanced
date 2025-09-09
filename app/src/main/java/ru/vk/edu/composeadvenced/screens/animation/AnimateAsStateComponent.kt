@@ -10,4 +10,4 @@ class AnimateAsStateComponent(
     fun onBackClick() {
         onBack()
     }
-} 
+}
