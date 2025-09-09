@@ -57,6 +57,7 @@ fun RootContent(component: RootComponent) {
             is RootComponent.Child.CustomLayout -> CustomLayoutScreen(instance.component)
             is RootComponent.Child.ComplexCustomComponent -> ComplexCustomComponentScreen(instance.component)
             is RootComponent.Child.ViewModel -> ViewModelScreen(instance.component)
+            is RootComponent.Child.PagerIndicator -> PagerIndicatorScreen(instance.component)
         }
     }
 }

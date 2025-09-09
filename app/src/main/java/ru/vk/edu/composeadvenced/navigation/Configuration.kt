@@ -44,4 +44,7 @@ sealed interface Configuration {
 
     // Демонстрация Decompose
     data object ViewModel : Configuration
+
+    // Pager Indicator
+    data object PagerIndicator : Configuration
 }
