@@ -11,17 +11,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import ru.vk.edu.composeadvenced.ui.pager.PagerAnimatedIndicator
+import ru.vk.edu.composeadvenced.ui.pager.PagerCustomLayoutIndicator
 import ru.vk.edu.composeadvenced.ui.pager.PagerIndicatorLazyListSimple
-import ru.vk.edu.composeadvenced.ui.pager.PagerIndicatorState
 import ru.vk.edu.composeadvenced.screens.PagerIndicatorComponent
 import ru.vk.edu.composeadvenced.ui.components.AppToolbar
+import ru.vk.edu.composeadvenced.ui.pager.PagerIndicatorState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PagerIndicatorScreen(
     component: PagerIndicatorComponent
 ) {
-    val pageCount = 5
+    val pageCount = 10
     val pagerState = rememberPagerState(pageCount = { pageCount })
 
     Scaffold(
@@ -57,12 +59,17 @@ fun PagerIndicatorScreen(
                         .fillMaxSize()
                         .padding(horizontal = 16.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = when (page) {
+                        containerColor = when (page % 10) {
                             0 -> Color(0xFF6200EE)
                             1 -> Color(0xFF03DAC6)
                             2 -> Color(0xFFFF6200)
                             3 -> Color(0xFF4CAF50)
                             4 -> Color(0xFFFF9800)
+                            5 -> Color(0xFF9C27B0)
+                            6 -> Color(0xFF2196F3)
+                            7 -> Color(0xFF00BCD4)
+                            8 -> Color(0xFF8BC34A)
+                            9 -> Color(0xFFFF5722)
                             else -> MaterialTheme.colorScheme.primary
                         }
                     )
@@ -83,7 +90,7 @@ fun PagerIndicatorScreen(
             Spacer(modifier = Modifier.height(32.dp))
 
             Text(
-                text = "Pager Indicator",
+                text = "Static Pager Indicator",
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
@@ -94,6 +101,30 @@ fun PagerIndicatorScreen(
                     pageCount = pageCount,
                     indicationCount = 3
                 ),
+                modifier = Modifier.padding(bottom = 24.dp)
+            )
+
+            Text(
+                text = "Animated Pager Indicator",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            PagerAnimatedIndicator(
+                pagerState = pagerState,
+                pageCount = pageCount,
+                modifier = Modifier.padding(bottom = 24.dp)
+            )
+
+            Text(
+                text = "Custom Layout Pager Indicator",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            PagerCustomLayoutIndicator(
+                pagerState = pagerState,
+                pageCount = pageCount,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
         }
