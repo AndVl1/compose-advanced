@@ -47,4 +47,7 @@ sealed interface Configuration {
 
     // Pager Indicator
     data object PagerIndicator : Configuration
+
+    // Shared Element Transition
+    data object SharedElementList : Configuration
 }

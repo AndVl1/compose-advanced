@@ -12,6 +12,7 @@ import ru.vk.edu.composeadvenced.screens.animation.*
 import ru.vk.edu.composeadvenced.screens.custom.*
 import ru.vk.edu.composeadvenced.screens.viewmodel.ViewModelComponent
 import ru.vk.edu.composeadvenced.screens.PagerIndicatorComponent
+import ru.vk.edu.composeadvenced.screens.SharedElementListComponent
 
 class RootComponent(
     componentContext: ComponentContext
@@ -43,7 +44,8 @@ class RootComponent(
                 onNavigateToAnimations = { navigation.pushNew(Configuration.Animations) },
                 onNavigateToCustomComponents = { navigation.pushNew(Configuration.CustomComponents) },
                 onNavigateToViewModelClick = { navigation.pushNew(Configuration.ViewModel) },
-                onNavigateToPagerIndicator = { navigation.pushNew(Configuration.PagerIndicator) }
+                onNavigateToPagerIndicator = { navigation.pushNew(Configuration.PagerIndicator) },
+                onNavigateToSharedElement = { navigation.pushNew(Configuration.SharedElementList) }
             )
         )
         is Configuration.Animations -> Child.Animations(
@@ -168,6 +170,12 @@ class RootComponent(
                 onBack = { navigation.pop() }
             )
         )
+        is Configuration.SharedElementList -> Child.SharedElementList(
+            SharedElementListComponent(
+                componentContext = componentContext,
+                onBack = { navigation.pop() }
+            )
+        )
     }
 
     sealed class Child {
@@ -190,5 +198,6 @@ class RootComponent(
         data class ComplexCustomComponent(val component: ComplexCustomComponentComponent) : Child()
         data class ViewModel(val component: ViewModelComponent) : Child()
         data class PagerIndicator(val component: PagerIndicatorComponent) : Child()
+        data class SharedElementList(val component: SharedElementListComponent) : Child()
     }
 }

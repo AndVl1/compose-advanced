@@ -51,6 +51,13 @@ fun MainScreen(component: MainComponent) {
             ) {
                 Text("Pager Indicator")
             }
+
+            Button(
+                onClick = { component.onSharedElementClick() },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Shared Element Transition")
+            }
         }
     }
 }

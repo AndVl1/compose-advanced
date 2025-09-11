@@ -8,6 +8,7 @@ class MainComponent(
     private val onNavigateToCustomComponents: () -> Unit,
     private val onNavigateToViewModelClick: () -> Unit,
     private val onNavigateToPagerIndicator: () -> Unit,
+    private val onNavigateToSharedElement: () -> Unit,
 ) : ComponentContext by componentContext {
     
     fun onAnimationsClick() {
@@ -24,5 +25,9 @@ class MainComponent(
 
     fun onPagerIndicatorClick() {
         onNavigateToPagerIndicator()
+    }
+
+    fun onSharedElementClick() {
+        onNavigateToSharedElement()
     }
 } 

@@ -21,7 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 fun AppToolbar(
     title: String,
     showBackButton: Boolean = false,
-    onBackClick: () -> Unit = {}
+    onBackClick: () -> Unit = {},
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -48,4 +48,4 @@ fun AppToolbar(
         // Учитываем системные отступы
         windowInsets = WindowInsets.safeDrawing
     )
-} 
+}
