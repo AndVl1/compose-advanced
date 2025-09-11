@@ -72,10 +72,10 @@ fun AnimatedVisibilityScreen(component: AnimatedVisibilityComponent) {
         ) {
             SectionTitle(title = "Простой пример")
             SimpleAnimatedVisibilityExample()
-            
+
             SectionTitle(title = "Различные анимации")
             DifferentAnimationsExample()
-            
+
             SectionTitle(title = "Сложный пример")
             AdvancedAnimatedVisibilityExample()
         }
@@ -85,7 +85,7 @@ fun AnimatedVisibilityScreen(component: AnimatedVisibilityComponent) {
 @Composable
 private fun SimpleAnimatedVisibilityExample() {
     var isVisible by remember { mutableStateOf(true) }
-    
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -103,9 +103,9 @@ private fun SimpleAnimatedVisibilityExample() {
                     .background(MaterialTheme.colorScheme.primary)
             )
         }
-        
+
         Spacer(modifier = Modifier.height(16.dp))
-        
+
         Button(onClick = { isVisible = !isVisible }) {
             Text(if (isVisible) "Скрыть" else "Показать")
         }
@@ -120,21 +120,21 @@ enum class AnimationType {
 private fun DifferentAnimationsExample() {
     var isVisible by remember { mutableStateOf(true) }
     var selectedAnimationType by remember { mutableStateOf(AnimationType.FADE) }
-    
+
     val enterTransition: EnterTransition = when (selectedAnimationType) {
         AnimationType.FADE -> fadeIn(animationSpec = tween(durationMillis = 500))
         AnimationType.SLIDE -> slideInHorizontally(animationSpec = tween(durationMillis = 500))
         AnimationType.SCALE -> scaleIn(animationSpec = tween(durationMillis = 500))
-        AnimationType.EXPAND -> expandIn(animationSpec = tween(durationMillis = 500), expandFrom = Alignment.Center)
+        AnimationType.EXPAND -> expandIn(animationSpec = tween(durationMillis = 500), expandFrom = Alignment.BottomEnd)
     }
-    
+
     val exitTransition: ExitTransition = when (selectedAnimationType) {
         AnimationType.FADE -> fadeOut(animationSpec = tween(durationMillis = 500))
         AnimationType.SLIDE -> slideOutHorizontally(animationSpec = tween(durationMillis = 500))
         AnimationType.SCALE -> scaleOut(animationSpec = tween(durationMillis = 500))
-        AnimationType.EXPAND -> shrinkOut(animationSpec = tween(durationMillis = 500), shrinkTowards = Alignment.Center)
+        AnimationType.EXPAND -> shrinkOut(animationSpec = tween(durationMillis = 500), shrinkTowards = Alignment.BottomEnd)
     }
-    
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -160,7 +160,7 @@ private fun DifferentAnimationsExample() {
                 )
             }
         }
-        
+
         // Выбор типа анимации
         Column(
             modifier = Modifier
@@ -171,7 +171,7 @@ private fun DifferentAnimationsExample() {
                 text = "Тип анимации:",
                 style = MaterialTheme.typography.bodyLarge
             )
-            
+
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -181,7 +181,7 @@ private fun DifferentAnimationsExample() {
                 )
                 Text("Fade")
             }
-            
+
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -191,7 +191,7 @@ private fun DifferentAnimationsExample() {
                 )
                 Text("Slide")
             }
-            
+
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -201,7 +201,7 @@ private fun DifferentAnimationsExample() {
                 )
                 Text("Scale")
             }
-            
+
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -212,7 +212,7 @@ private fun DifferentAnimationsExample() {
                 Text("Expand")
             }
         }
-        
+
         Button(onClick = { isVisible = !isVisible }) {
             Text(if (isVisible) "Скрыть" else "Показать")
         }
@@ -222,27 +222,22 @@ private fun DifferentAnimationsExample() {
 @Composable
 private fun AdvancedAnimatedVisibilityExample() {
     var showCard by remember { mutableStateOf(false) }
-    
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(onClick = { showCard = !showCard }) {
-            Text(if (showCard) "Скрыть карточку" else "Показать карточку")
-        }
-        
-        Spacer(modifier = Modifier.height(16.dp))
-        
+
         AnimatedVisibility(
             visible = showCard,
             modifier = Modifier,
-            enter = fadeIn(animationSpec = tween(300)) + 
+            enter = fadeIn(animationSpec = tween(300)) +
                     expandIn(
                         animationSpec = tween(500),
                         expandFrom = Alignment.TopCenter,
                         initialSize = { IntSize(it.width, 0) }
                     ),
-            exit = fadeOut(animationSpec = tween(300)) + 
+            exit = fadeOut(animationSpec = tween(300)) +
                    shrinkOut(
                        animationSpec = tween(500),
                        shrinkTowards = Alignment.BottomCenter,
@@ -261,18 +256,18 @@ private fun AdvancedAnimatedVisibilityExample() {
                         text = "Заголовок карточки",
                         style = MaterialTheme.typography.titleLarge
                     )
-                    
+
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     Text(
                         text = "Это содержимое карточки с анимацией появления и исчезновения. " +
                                "Анимация комбинирует fade и expand/shrink эффекты для более " +
                                "плавного и интересного визуального перехода.",
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    
+
                     Spacer(modifier = Modifier.height(16.dp))
-                    
+
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.End
@@ -286,5 +281,11 @@ private fun AdvancedAnimatedVisibilityExample() {
                 }
             }
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(onClick = { showCard = !showCard }) {
+            Text(if (showCard) "Скрыть карточку" else "Показать карточку")
+        }
     }
-} 
+}

@@ -9,6 +9,7 @@ class MainComponent(
     private val onNavigateToViewModelClick: () -> Unit,
     private val onNavigateToPagerIndicator: () -> Unit,
     private val onNavigateToSharedElement: () -> Unit,
+    private val onNavigateToLottieAnimations: () -> Unit,
 ) : ComponentContext by componentContext {
     
     fun onAnimationsClick() {
@@ -29,5 +30,9 @@ class MainComponent(
 
     fun onSharedElementClick() {
         onNavigateToSharedElement()
+    }
+
+    fun onLottieAnimationsClick() {
+        onNavigateToLottieAnimations()
     }
 } 

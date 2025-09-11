@@ -50,4 +50,7 @@ sealed interface Configuration {
 
     // Shared Element Transition
     data object SharedElementList : Configuration
+    
+    // Lottie Animations
+    data object LottieAnimations : Configuration
 }

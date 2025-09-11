@@ -62,6 +62,7 @@ fun RootContent(component: RootComponent) {
             is RootComponent.Child.ViewModel -> ViewModelScreen(instance.component)
             is RootComponent.Child.PagerIndicator -> PagerIndicatorScreen(instance.component)
             is RootComponent.Child.SharedElementList -> SimpleSharedElementScreen(instance.component)
+            is RootComponent.Child.LottieAnimations -> LottieAnimationsScreen(instance.component)
             }
         }
     }

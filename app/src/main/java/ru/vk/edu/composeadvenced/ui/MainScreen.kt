@@ -58,6 +58,13 @@ fun MainScreen(component: MainComponent) {
             ) {
                 Text("Shared Element Transition")
             }
+
+            Button(
+                onClick = { component.onLottieAnimationsClick() },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Lottie Animations")
+            }
         }
     }
 }

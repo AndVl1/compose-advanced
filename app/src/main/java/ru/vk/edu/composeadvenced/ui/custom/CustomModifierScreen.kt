@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -65,19 +66,19 @@ fun CustomModifierScreen(component: CustomModifierComponent) {
         ) {
             SectionTitle(title = "drawBehind - простой пример")
             SimpleDrawBehindExample()
-            
+
             SectionTitle(title = "drawWithContent - наложение эффектов")
             DrawWithContentExample()
-            
+
             SectionTitle(title = "drawWithCache - оптимизация отрисовки")
             DrawWithCacheExample()
-            
+
             SectionTitle(title = "Комбинирование модификаторов")
             CombinedModifiersExample()
-            
+
             SectionTitle(title = "Создание собственного модификатора")
             CustomModifierExample()
-            
+
             Spacer(modifier = Modifier.height(32.dp))
         }
     }
@@ -102,19 +103,19 @@ private fun SimpleDrawBehindExample() {
                         radius = 60.dp.toPx(),
                         style = Stroke(width = 5.dp.toPx())
                     )
-                    
+
                     // Рисуем линии
                     for (i in 0 until 12) {
                         val angle = i * 30f
                         val radians = Math.toRadians(angle.toDouble())
                         val startRadius = 60.dp.toPx()
                         val endRadius = 70.dp.toPx()
-                        
+
                         val startX = cos(radians).toFloat() * startRadius
                         val startY = sin(radians).toFloat() * startRadius
                         val endX = cos(radians).toFloat() * endRadius
                         val endY = sin(radians).toFloat() * endRadius
-                        
+
                         drawLine(
                             color = Color.Blue,
                             start = Offset(center.x + startX, center.y + startY),
@@ -137,7 +138,7 @@ private fun SimpleDrawBehindExample() {
 @Composable
 private fun DrawWithContentExample() {
     var alpha by remember { mutableFloatStateOf(0.5f) }
-    
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -148,7 +149,7 @@ private fun DrawWithContentExample() {
                 .drawWithContent {
                     // Сначала рисуем содержимое
                     drawContent()
-                    
+
                     // Затем накладываем полупрозрачный градиент поверх
                     drawRect(
                         brush = Brush.linearGradient(
@@ -170,11 +171,11 @@ private fun DrawWithContentExample() {
                 color = MaterialTheme.colorScheme.onPrimaryContainer
             )
         }
-        
+
         Spacer(modifier = Modifier.height(16.dp))
-        
+
         Text("Прозрачность градиента: ${(alpha * 100).toInt()}%")
-        
+
         Slider(
             value = alpha,
             onValueChange = { alpha = it },
@@ -187,7 +188,7 @@ private fun DrawWithContentExample() {
 @Composable
 private fun DrawWithCacheExample() {
     var rotation by remember { mutableFloatStateOf(0f) }
-    
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -203,7 +204,7 @@ private fun DrawWithCacheExample() {
                             Color.Red
                         )
                     )
-                    
+
                     onDrawBehind {
                         // Рисуем солнце с лучами
                         rotate(rotation) {
@@ -213,19 +214,19 @@ private fun DrawWithCacheExample() {
                                 radius = 50.dp.toPx(),
                                 center = center
                             )
-                            
+
                             // Лучи солнца
                             for (i in 0 until 12) {
                                 val angle = i * 30f
                                 val radians = Math.toRadians(angle.toDouble())
                                 val startRadius = 50.dp.toPx()
                                 val endRadius = 80.dp.toPx()
-                                
+
                                 val startX = cos(radians).toFloat() * startRadius
                                 val startY = sin(radians).toFloat() * startRadius
                                 val endX = cos(radians).toFloat() * endRadius
                                 val endY = sin(radians).toFloat() * endRadius
-                                
+
                                 drawLine(
                                     color = Color.Yellow,
                                     start = Offset(center.x + startX, center.y + startY),
@@ -237,11 +238,11 @@ private fun DrawWithCacheExample() {
                     }
                 }
         )
-        
+
         Spacer(modifier = Modifier.height(16.dp))
-        
+
         Text("Поворот: ${rotation.toInt()}°")
-        
+
         Slider(
             value = rotation,
             onValueChange = { rotation = it },
@@ -256,7 +257,7 @@ private fun CombinedModifiersExample() {
     var scale by remember { mutableFloatStateOf(1f) }
     var rotation by remember { mutableFloatStateOf(0f) }
     val primaryColor = MaterialTheme.colorScheme.primary
-    
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -272,11 +273,11 @@ private fun CombinedModifiersExample() {
                 .drawWithContent {
                     // Рисуем фон с узором
                     drawRect(Color.White)
-                    
+
                     // Рисуем узор из точек
                     val dotSize = 4.dp.toPx()
                     val spacing = 20.dp.toPx()
-                    
+
                     for (x in 0..size.width.toInt() step spacing.toInt()) {
                         for (y in 0..size.height.toInt() step spacing.toInt()) {
                             drawCircle(
@@ -286,10 +287,10 @@ private fun CombinedModifiersExample() {
                             )
                         }
                     }
-                    
+
                     // Рисуем содержимое
                     drawContent()
-                    
+
                     // Рисуем рамку
                     drawRect(
                         color = primaryColor,
@@ -308,20 +309,20 @@ private fun CombinedModifiersExample() {
                 )
             }
         }
-        
+
         Spacer(modifier = Modifier.height(16.dp))
-        
+
         Text("Масштаб: ${(scale * 100).toInt()}%")
-        
+
         Slider(
             value = scale,
             onValueChange = { scale = it },
             valueRange = 0.5f..1.5f,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
-        
+
         Text("Поворот: ${rotation.toInt()}°")
-        
+
         Slider(
             value = rotation,
             onValueChange = { rotation = it },
@@ -342,7 +343,7 @@ fun Modifier.dashedBorder(
     // Создаем путь на основе формы
     val path = Path()
     val outline = shape.createOutline(size, layoutDirection, this)
-    
+
     // Преобразуем Outline в Path
     if (outline is androidx.compose.ui.graphics.Outline.Generic) {
         path.addPath(outline.path)
@@ -351,7 +352,7 @@ fun Modifier.dashedBorder(
     } else if (outline is androidx.compose.ui.graphics.Outline.Rectangle) {
         path.addRect(outline.rect)
     }
-    
+
     // Создаем пунктирную обводку
     val stroke = Stroke(
         width = width,
@@ -360,11 +361,11 @@ fun Modifier.dashedBorder(
             phase = 0f
         )
     )
-    
+
     onDrawWithContent {
         // Рисуем содержимое
         drawContent()
-        
+
         // Рисуем пунктирную рамку
         drawPath(
             path = path,
@@ -379,7 +380,7 @@ private fun CustomModifierExample() {
     var cornerRadius by remember { mutableFloatStateOf(16f) }
     var dashWidth by remember { mutableFloatStateOf(10f) }
     var gapWidth by remember { mutableFloatStateOf(10f) }
-    
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -403,29 +404,29 @@ private fun CustomModifierExample() {
                 color = MaterialTheme.colorScheme.primary
             )
         }
-        
+
         Spacer(modifier = Modifier.height(16.dp))
-        
+
         Text("Радиус скругления: ${cornerRadius.toInt()}dp")
-        
+
         Slider(
             value = cornerRadius,
             onValueChange = { cornerRadius = it },
             valueRange = 0f..50f,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
-        
+
         Text("Длина штриха: ${dashWidth.toInt()}px")
-        
+
         Slider(
             value = dashWidth,
             onValueChange = { dashWidth = it },
             valueRange = 1f..30f,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
-        
+
         Text("Длина промежутка: ${gapWidth.toInt()}px")
-        
+
         Slider(
             value = gapWidth,
             onValueChange = { gapWidth = it },
@@ -433,4 +434,4 @@ private fun CustomModifierExample() {
             modifier = Modifier.padding(horizontal = 16.dp)
         )
     }
-} 
+}

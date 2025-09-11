@@ -69,4 +69,7 @@ dependencies {
 
     // Image Loading
     implementation(libs.coil.compose)
+    
+    // Lottie Animations
+    implementation("com.airbnb.android:lottie-compose:6.1.0")
 }
