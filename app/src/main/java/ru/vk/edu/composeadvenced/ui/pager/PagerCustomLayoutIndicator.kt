@@ -40,14 +40,16 @@ fun PagerCustomLayoutIndicator(
     val density = LocalDensity.current
     val activeColor = MaterialTheme.colorScheme.primary
     val inactiveColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
-    
+
     // Calculate the smooth animated position
+    // можно просто val position = pagerState.currentPage + pagerState.currentPageOffsetFraction,
+    // если не нужна анимация
     val animatedPosition by animateFloatAsState(
         targetValue = pagerState.currentPage + pagerState.currentPageOffsetFraction,
         animationSpec = tween(durationMillis = 0),
         label = "indicatorPosition"
     )
-    
+
     Layout(
         modifier = modifier,
         content = {
@@ -60,7 +62,7 @@ fun PagerCustomLayoutIndicator(
                         .background(inactiveColor)
                 )
             }
-            
+
             // Animated active dot
             Box(
                 modifier = Modifier
@@ -92,18 +94,18 @@ private fun MeasureScope.customPagerIndicatorMeasurePolicy(
     // Measure all dots with the same constraints
     val dotConstraints = Constraints.fixed(dotSizePx.roundToInt(), dotSizePx.roundToInt())
     val placeables = measurables.map { it.measure(dotConstraints) }
-    
+
     // Calculate total width needed
     val totalWidth = (pageCount * dotSizePx + (pageCount - 1) * itemSpacePx).roundToInt()
     val totalHeight = dotSizePx.roundToInt()
-    
+
     return layout(totalWidth, totalHeight) {
         // Place static dots
         repeat(pageCount) { index ->
             val x = (index * (dotSizePx + itemSpacePx)).roundToInt()
             placeables[index].place(IntOffset(x, 0))
         }
-        
+
         // Place animated active dot
         val activeX = (animatedPosition * (dotSizePx + itemSpacePx)).roundToInt()
         placeables[pageCount].place(IntOffset(activeX, 0)) // Active dot is the last measurable

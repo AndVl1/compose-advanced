@@ -40,6 +40,8 @@ fun PagerAnimatedIndicator(
     val inactiveColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
 
     // Calculate the offset for the animated dot based on currentPageOffsetFraction
+    // можно просто val offset = (pagerState.currentPage + pagerState.currentPageOffsetFraction) * (BasePageIndicationSize + itemSpace).toPx()
+    // если не нужна анимация
     val animatedOffset by animateFloatAsState(
         targetValue = with(density) {
             (pagerState.currentPage + pagerState.currentPageOffsetFraction) * (BasePageIndicationSize + itemSpace).toPx()

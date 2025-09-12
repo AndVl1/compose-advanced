@@ -19,6 +19,7 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
@@ -79,7 +80,7 @@ fun PagerIndicatorLazyListSimple(
     }
 }
 
-@Stable
+@Immutable
 data class PagerIndicatorState(
     val pagerState: PagerState,
     val pageCount: Int,
