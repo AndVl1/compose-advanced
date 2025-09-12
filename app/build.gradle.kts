@@ -66,4 +66,10 @@ dependencies {
 
     // kotlinx-serialization-json
     implementation(libs.kotlinx.serialization.json)
+
+    // Image Loading
+    implementation(libs.coil.compose)
+    
+    // Lottie Animations
+    implementation("com.airbnb.android:lottie-compose:6.1.0")
 }

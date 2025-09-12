@@ -30,20 +30,41 @@ fun MainScreen(component: MainComponent) {
             ) {
                 Text("Анимации")
             }
-            
+
             Button(
                 onClick = { component.onCustomComponentsClick() },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Кастомные компоненты")
             }
-            
+
             Button(
                 onClick = { component.onViewModelClick() },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("ViewModel с Decompose")
             }
+
+            Button(
+                onClick = { component.onPagerIndicatorClick() },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Pager Indicator")
+            }
+
+            Button(
+                onClick = { component.onSharedElementClick() },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Shared Element Transition")
+            }
+
+            Button(
+                onClick = { component.onLottieAnimationsClick() },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Lottie Animations")
+            }
         }
     }
-} 
+}

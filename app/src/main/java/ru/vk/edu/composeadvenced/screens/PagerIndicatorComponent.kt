@@ -1,13 +1,13 @@
-package ru.vk.edu.composeadvenced.screens.animation
+package ru.vk.edu.composeadvenced.screens
 
 import com.arkivanov.decompose.ComponentContext
 
-class AnimateAsStateComponent(
+class PagerIndicatorComponent(
     componentContext: ComponentContext,
     private val onBack: () -> Unit
 ) : ComponentContext by componentContext {
     
-    fun onBackClick() {
+    fun onBackClicked() {
         onBack()
     }
 }

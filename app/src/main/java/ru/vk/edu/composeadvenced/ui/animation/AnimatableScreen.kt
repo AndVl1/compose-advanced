@@ -38,6 +38,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.IntOffset
@@ -68,10 +70,10 @@ fun AnimatableScreen(component: AnimatableComponent) {
         ) {
             SectionTitle(title = "Простой пример")
             SimpleAnimatableExample()
-            
+
             SectionTitle(title = "Анимация цвета")
             ColorAnimatableExample()
-            
+
             SectionTitle(title = "Сложный пример")
             AdvancedAnimatableExample()
         }
@@ -82,9 +84,9 @@ fun AnimatableScreen(component: AnimatableComponent) {
 private fun SimpleAnimatableExample() {
     val scope = rememberCoroutineScope()
     val offsetX = remember { Animatable(0f) }
-    
+
     var direction by remember { mutableStateOf(1f) }
-    
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -99,12 +101,11 @@ private fun SimpleAnimatableExample() {
                         y = 0
                     )
                 }
-//                .offset(x = offsetX.value.dp)
                 .size(50.dp)
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.primary)
         )
-        
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -136,7 +137,7 @@ private fun ColorAnimatableExample() {
     val scope = rememberCoroutineScope()
     val color = remember { Animatable(Color.Red) }
     var isRed by remember { mutableStateOf(true) }
-    
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -147,9 +148,9 @@ private fun ColorAnimatableExample() {
                 .clip(CircleShape)
                 .background(color.value)
         )
-        
+
         Spacer(modifier = Modifier.height(16.dp))
-        
+
         Button(
             onClick = {
                 scope.launch {
@@ -173,7 +174,7 @@ private fun ColorAnimatableExample() {
 private fun AdvancedAnimatableExample() {
     val scale = remember { Animatable(1f) }
     val offsetY = remember { Animatable(0f) }
-    
+
     LaunchedEffect(key1 = true) {
         scale.animateTo(
             targetValue = 1.5f,
@@ -183,7 +184,7 @@ private fun AdvancedAnimatableExample() {
             )
         )
     }
-    
+
     LaunchedEffect(key1 = true) {
         offsetY.animateTo(
             targetValue = 50f,
@@ -193,7 +194,7 @@ private fun AdvancedAnimatableExample() {
             )
         )
     }
-    
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -215,4 +216,4 @@ private fun AdvancedAnimatableExample() {
                 .background(MaterialTheme.colorScheme.tertiary)
         )
     }
-} 
+}

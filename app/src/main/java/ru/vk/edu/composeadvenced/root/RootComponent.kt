@@ -11,13 +11,16 @@ import ru.vk.edu.composeadvenced.screens.MainComponent
 import ru.vk.edu.composeadvenced.screens.animation.*
 import ru.vk.edu.composeadvenced.screens.custom.*
 import ru.vk.edu.composeadvenced.screens.viewmodel.ViewModelComponent
+import ru.vk.edu.composeadvenced.screens.PagerIndicatorComponent
+import ru.vk.edu.composeadvenced.screens.SharedElementListComponent
+import ru.vk.edu.composeadvenced.screens.LottieAnimationsComponent
 
 class RootComponent(
     componentContext: ComponentContext
 ) : ComponentContext by componentContext, BackHandlerOwner {
 
     private val navigation = StackNavigation<Configuration>()
-    
+
     private val stack = childStack(
         source = navigation,
         initialStack = { listOf(Configuration.Main) },
@@ -41,7 +44,10 @@ class RootComponent(
                 componentContext = componentContext,
                 onNavigateToAnimations = { navigation.pushNew(Configuration.Animations) },
                 onNavigateToCustomComponents = { navigation.pushNew(Configuration.CustomComponents) },
-                onNavigateToViewModelClick = { navigation.pushNew(Configuration.ViewModel) }
+                onNavigateToViewModelClick = { navigation.pushNew(Configuration.ViewModel) },
+                onNavigateToPagerIndicator = { navigation.pushNew(Configuration.PagerIndicator) },
+                onNavigateToSharedElement = { navigation.pushNew(Configuration.SharedElementList) },
+                onNavigateToLottieAnimations = { navigation.pushNew(Configuration.LottieAnimations) }
             )
         )
         is Configuration.Animations -> Child.Animations(
@@ -160,6 +166,24 @@ class RootComponent(
                 onBack = { navigation.pop() }
             )
         )
+        is Configuration.PagerIndicator -> Child.PagerIndicator(
+            PagerIndicatorComponent(
+                componentContext = componentContext,
+                onBack = { navigation.pop() }
+            )
+        )
+        is Configuration.SharedElementList -> Child.SharedElementList(
+            SharedElementListComponent(
+                componentContext = componentContext,
+                onBack = { navigation.pop() }
+            )
+        )
+        is Configuration.LottieAnimations -> Child.LottieAnimations(
+            LottieAnimationsComponent(
+                componentContext = componentContext,
+                onBack = { navigation.pop() }
+            )
+        )
     }
 
     sealed class Child {
@@ -181,5 +205,8 @@ class RootComponent(
         data class CustomLayout(val component: CustomLayoutComponent) : Child()
         data class ComplexCustomComponent(val component: ComplexCustomComponentComponent) : Child()
         data class ViewModel(val component: ViewModelComponent) : Child()
+        data class PagerIndicator(val component: PagerIndicatorComponent) : Child()
+        data class SharedElementList(val component: SharedElementListComponent) : Child()
+        data class LottieAnimations(val component: LottieAnimationsComponent) : Child()
     }
-} 
+}

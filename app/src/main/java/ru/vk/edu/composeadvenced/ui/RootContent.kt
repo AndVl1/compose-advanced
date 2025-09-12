@@ -1,5 +1,7 @@
 package ru.vk.edu.composeadvenced.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.stack.Children
@@ -25,18 +27,19 @@ import ru.vk.edu.composeadvenced.ui.custom.CustomModifierScreen
 import ru.vk.edu.composeadvenced.ui.viewmodel.ViewModelScreen
 import ru.vk.edu.composeadvenced.ui.animation.CertificatesStackScreen
 
-@OptIn(ExperimentalDecomposeApi::class)
+@OptIn(ExperimentalDecomposeApi::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun RootContent(component: RootComponent) {
-    Children(
-        stack = component.childStack,
-        animation = predictiveBackAnimation(
-            component.backHandler,
-            fallbackAnimation = stackAnimation(fade() + slide()),
-            onBack = component::onBackClicked
-        )
-    ) { child ->
-        when (val instance = child.instance) {
+    SharedTransitionLayout {
+        Children(
+            stack = component.childStack,
+            animation = predictiveBackAnimation(
+                component.backHandler,
+                fallbackAnimation = stackAnimation(fade() + slide()),
+                onBack = component::onBackClicked
+            )
+        ) { child ->
+            when (val instance = child.instance) {
             is RootComponent.Child.Main -> MainScreen(instance.component)
             is RootComponent.Child.Animations -> AnimationsScreen(instance.component)
             // Анимации
@@ -57,6 +60,10 @@ fun RootContent(component: RootComponent) {
             is RootComponent.Child.CustomLayout -> CustomLayoutScreen(instance.component)
             is RootComponent.Child.ComplexCustomComponent -> ComplexCustomComponentScreen(instance.component)
             is RootComponent.Child.ViewModel -> ViewModelScreen(instance.component)
+            is RootComponent.Child.PagerIndicator -> PagerIndicatorScreen(instance.component)
+            is RootComponent.Child.SharedElementList -> SimpleSharedElementScreen(instance.component)
+            is RootComponent.Child.LottieAnimations -> LottieAnimationsScreen(instance.component)
+            }
         }
     }
 }
