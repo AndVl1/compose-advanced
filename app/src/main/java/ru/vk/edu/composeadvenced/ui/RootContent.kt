@@ -40,29 +40,29 @@ fun RootContent(component: RootComponent) {
             )
         ) { child ->
             when (val instance = child.instance) {
-            is RootComponent.Child.Main -> MainScreen(instance.component)
-            is RootComponent.Child.Animations -> AnimationsScreen(instance.component)
-            // Анимации
-            is RootComponent.Child.Animatable -> AnimatableScreen(instance.component)
-            is RootComponent.Child.AnimateAsState -> AnimateAsStateScreen(instance.component)
-            is RootComponent.Child.UpdateTransition -> UpdateTransitionScreen(instance.component)
-            is RootComponent.Child.AnimatedVisibility -> AnimatedVisibilityScreen(instance.component)
-            is RootComponent.Child.AnimatedContent -> AnimatedContentScreen(instance.component)
-            is RootComponent.Child.Crossfade -> CrossfadeScreen(instance.component)
-            is RootComponent.Child.AnimateContentSize -> AnimateContentSizeScreen(instance.component)
-            is RootComponent.Child.AnchoredDraggable -> AnchoredDraggableScreen(instance.component)
-            is RootComponent.Child.AnimateItemPlacement -> AnimateItemPlacementScreen(instance.component)
-            is RootComponent.Child.CardStack -> CertificatesStackScreen(instance.component)
-            // Кастомные компоненты
-            is RootComponent.Child.CustomComponents -> CustomComponentsScreen(instance.component)
-            is RootComponent.Child.CustomModifier -> CustomModifierScreen(instance.component)
-            is RootComponent.Child.CustomDraw -> CustomDrawScreen(instance.component)
-            is RootComponent.Child.CustomLayout -> CustomLayoutScreen(instance.component)
-            is RootComponent.Child.ComplexCustomComponent -> ComplexCustomComponentScreen(instance.component)
-            is RootComponent.Child.ViewModel -> ViewModelScreen(instance.component)
-            is RootComponent.Child.PagerIndicator -> PagerIndicatorScreen(instance.component)
-            is RootComponent.Child.SharedElementList -> SimpleSharedElementScreen(instance.component)
-            is RootComponent.Child.LottieAnimations -> LottieAnimationsScreen(instance.component)
+                is RootComponent.Child.Main -> MainScreen(instance.component)
+                is RootComponent.Child.Animations -> AnimationsScreen(instance.component)
+                // Анимации
+                is RootComponent.Child.Animatable -> AnimatableScreen(instance.component)
+                is RootComponent.Child.AnimateAsState -> AnimateAsStateScreen(instance.component)
+                is RootComponent.Child.UpdateTransition -> UpdateTransitionScreen(instance.component)
+                is RootComponent.Child.AnimatedVisibility -> AnimatedVisibilityScreen(instance.component)
+                is RootComponent.Child.AnimatedContent -> AnimatedContentScreen(instance.component)
+                is RootComponent.Child.Crossfade -> CrossfadeScreen(instance.component)
+                is RootComponent.Child.AnimateContentSize -> AnimateContentSizeScreen(instance.component)
+                is RootComponent.Child.AnchoredDraggable -> AnchoredDraggableScreen(instance.component)
+                is RootComponent.Child.AnimateItemPlacement -> AnimateItemPlacementScreen(instance.component)
+                is RootComponent.Child.CardStack -> CertificatesStackScreen(instance.component)
+                // Кастомные компоненты
+                is RootComponent.Child.CustomComponents -> CustomComponentsScreen(instance.component)
+                is RootComponent.Child.CustomModifier -> CustomModifierScreen(instance.component)
+                is RootComponent.Child.CustomDraw -> CustomDrawScreen(instance.component)
+                is RootComponent.Child.CustomLayout -> CustomLayoutScreen(instance.component)
+                is RootComponent.Child.ComplexCustomComponent -> ComplexCustomComponentScreen(instance.component)
+                is RootComponent.Child.ViewModel -> ViewModelScreen(instance.component)
+                is RootComponent.Child.PagerIndicator -> PagerIndicatorScreen(instance.component)
+                is RootComponent.Child.SharedElementList -> SimpleSharedElementScreen(instance.component)
+                is RootComponent.Child.LottieAnimations -> LottieAnimationsScreen(instance.component)
             }
         }
     }
